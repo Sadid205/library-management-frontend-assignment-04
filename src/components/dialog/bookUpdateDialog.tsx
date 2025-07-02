@@ -48,7 +48,7 @@ export function BookUpdateDialog({ book }: Props) {
   const [updateBook, { data, isLoading, isError }] = useUpdateBookMutation();
   const onSubmit: SubmitHandler<IBookWithoutId> = async (formData) => {
     // console.log("clik");
-    // console.log("formData", formData);
+    console.log("formData", formData);
     const res = await updateBook({ bookData: formData, id: book._id }).unwrap();
     if (res.success) {
       toast.success("Book updated successfully!");
@@ -102,7 +102,7 @@ export function BookUpdateDialog({ book }: Props) {
             <div className="grid gap-3">
               <Label htmlFor="copies">Copies</Label>
               <Input
-                {...register("copies")}
+                {...register("copies", { valueAsNumber: true })}
                 type="number"
                 id="copies"
                 name="copies"

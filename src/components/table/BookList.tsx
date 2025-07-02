@@ -10,13 +10,11 @@ import {
 } from "@/components/ui/table";
 import type { IBook } from "@/interfaces/Ibook";
 import { useGetAllBooksQuery } from "@/redux/services/book";
-import { Edit } from "lucide-react";
 import { BookUpdateDialog } from "../dialog/bookUpdateDialog";
 import Loader from "../loader/Loader";
+import { DeleteAlertDialog } from "../dialog/alertDialog";
 export function BookListTable() {
   const { data: response, isLoading, isError } = useGetAllBooksQuery(undefined);
-
-  console.log(isLoading);
 
   return (
     <div>
@@ -49,9 +47,10 @@ export function BookListTable() {
                   <TableCell>
                     {book.available ? "Available" : "Not available"}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="flex gap-4">
                     {/* <Edit /> */}
                     <BookUpdateDialog book={book} />
+                    <DeleteAlertDialog id={book._id} />
                   </TableCell>
                 </TableRow>
               ))}
