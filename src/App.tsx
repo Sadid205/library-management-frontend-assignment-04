@@ -13,6 +13,9 @@ import { useGetAllBooksQuery } from "./redux/services/book";
 import Navbar from "./components/layout/Navbar";
 import { ThemeProvider } from "./components/theme-provider";
 import { BookListTable } from "./components/table/BookList";
+import { BookMutationDialog } from "./components/dialog/bookMutationDialog";
+import { Outlet } from "react-router";
+import { Footer } from "./components/layout/Footer";
 
 function App() {
   const count = useAppSelector(selectCount);
@@ -23,7 +26,11 @@ function App() {
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Toaster position="top-center" reverseOrder={false} />
       <Navbar />
-      <BookListTable />
+      {/* <BookListTable />
+      <br />
+      <BookMutationDialog mode="create" /> */}
+      <Outlet />
+      <Footer />
     </ThemeProvider>
   );
 }

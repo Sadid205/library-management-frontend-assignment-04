@@ -27,6 +27,14 @@ export const bookApi = createApi({
       }),
       invalidatesTags: ["book"],
     }),
+    createBook: builder.mutation({
+      query: ({ bookData }: { bookData: IBookWithoutId }) => ({
+        url: "/books",
+        method: "POST",
+        body: bookData,
+      }),
+      invalidatesTags: ["book"],
+    }),
   }),
 });
 
@@ -34,4 +42,5 @@ export const {
   useGetAllBooksQuery,
   useUpdateBookMutation,
   useDeleteBookMutation,
+  useCreateBookMutation,
 } = bookApi;

@@ -12,15 +12,16 @@ interface Props {
   genre: string;
   genreList: string[];
   onChange: (val: string) => void;
+  disabled: boolean;
 }
 
-export function BookSelection({ genre, genreList, onChange }: Props) {
+export function BookSelection({ disabled, genre, genreList, onChange }: Props) {
   // console.log(genre);
 
   return (
-    <Select value={genre} onValueChange={onChange}>
+    <Select disabled={disabled} value={genre} onValueChange={onChange}>
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Select a fruit" />
+        <SelectValue placeholder="Select a genre" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>

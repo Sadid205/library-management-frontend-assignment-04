@@ -10,15 +10,30 @@ import {
 } from "@/components/ui/table";
 import type { IBook } from "@/interfaces/Ibook";
 import { useGetAllBooksQuery } from "@/redux/services/book";
-import { BookUpdateDialog } from "../dialog/bookUpdateDialog";
+import { BookMutationDialog } from "../dialog/bookMutationDialog";
 import Loader from "../loader/Loader";
 import { DeleteAlertDialog } from "../dialog/alertDialog";
-export function BookListTable() {
-  const { data: response, isLoading, isError } = useGetAllBooksQuery(undefined);
+import { BorrowDialog } from "../dialog/borrowDialog";
+interface Props {
+  bookMutation?: boolean;
+  title?: string;
+}
+export function BookListTable({ title, bookMutation }: Props) {
+  const {
+    data: response,
+    isLoading,
+    isError,
+    refetch,
+  } = useGetAllBooksQuery(undefined);
 
   return (
     <div>
-      <h1 className="text-3xl text-center m-10">Choose Your Book! </h1>
+      <h1 className="text-3xl text-center m-10">
+        {title ? title : "Choose Your Book! "}
+      </h1>
+      <div className="flex justify-end">
+        {bookMutation ? <BookMutationDialog mode="create" /> : ""}
+      </div>
       {isLoading ? (
         <Loader />
       ) : (
@@ -45,11 +60,17 @@ export function BookListTable() {
                   <TableCell>{book.isbn}</TableCell>
                   <TableCell>{book.copies}</TableCell>
                   <TableCell>
-                    {book.available ? "Available" : "Not available"}
+                    {book.available ? "Available" : "Unavailable"}
                   </TableCell>
                   <TableCell className="flex gap-4">
                     {/* <Edit /> */}
-                    <BookUpdateDialog book={book} />
+                    <BorrowDialog
+                      isAvailable={book.available}
+                      refetch={refetch}
+                      id={book._id}
+                    />
+                    <BookMutationDialog mode="view" book={book} />
+                    <BookMutationDialog mode="update" book={book} />
                     <DeleteAlertDialog id={book._id} />
                   </TableCell>
                 </TableRow>

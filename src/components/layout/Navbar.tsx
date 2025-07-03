@@ -11,16 +11,18 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ModeToggle } from "../mode-toggle";
+import { useLocation } from "react-router";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-  { href: "#", label: "Home", active: true },
-  { href: "#", label: "Features" },
-  { href: "#", label: "Pricing" },
-  { href: "#", label: "About" },
+  { href: "/books", label: "All Books", active: true },
+  { href: "/add-books", label: "Add Book" },
+  { href: "/borrow-summary", label: "Borrow Summary" },
 ];
 
 export default function Navbar() {
+  const path = useLocation().pathname;
+  console.log(path);
   return (
     <header className="border-b px-4 md:px-6">
       <div className="flex h-16 items-center justify-between gap-4">
@@ -69,7 +71,7 @@ export default function Navbar() {
                       <NavigationMenuLink
                         href={link.href}
                         className="py-1.5"
-                        active={link.active}
+                        active={link.href === path}
                       >
                         {link.label}
                       </NavigationMenuLink>
