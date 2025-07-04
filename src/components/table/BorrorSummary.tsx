@@ -25,7 +25,7 @@ export function BorrowSummary() {
             <TableRow>
               <TableHead className="w-[100px]">Book Title</TableHead>
               <TableHead>ISBN</TableHead>
-              <TableHead>Total Quantity</TableHead>
+              <TableHead>Total Quantity Borrowed</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
