@@ -1,9 +1,7 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -14,18 +12,24 @@ import { BookMutationDialog } from "../dialog/bookMutationDialog";
 import Loader from "../loader/Loader";
 import { DeleteAlertDialog } from "../dialog/alertDialog";
 import { BorrowDialog } from "../dialog/borrowDialog";
+import { PaginationComponent } from "../layout/Pagination";
+import { useAppSelector } from "@/redux/hook";
+import { selectPage } from "@/redux/features/counter/paginationSlice";
 interface Props {
   bookMutation?: boolean;
   title?: string;
 }
 export function BookListTable({ title, bookMutation }: Props) {
+  const { page } = useAppSelector(selectPage);
+  // const page = 3;
+  const limit = 10;
   const {
     data: response,
     isLoading,
-    isError,
     refetch,
-  } = useGetAllBooksQuery(undefined);
-
+  } = useGetAllBooksQuery({ limit, page });
+  const maxPage = Math.ceil((response && response.total) / limit);
+  console.log(maxPage);
   return (
     <div>
       <h1 className="text-3xl text-center m-10">
@@ -76,14 +80,16 @@ export function BookListTable({ title, bookMutation }: Props) {
                 </TableRow>
               ))}
           </TableBody>
+          {/* <TableCell colSpan={3}>Total</TableCell>
+          <TableCell className="text-right">$2,500.00</TableCell> */}
           {/* <TableFooter>
-          <TableRow>
-            <TableCell colSpan={3}>Total</TableCell>
-            <TableCell className="text-right">$2,500.00</TableCell>
-          </TableRow>
-        </TableFooter> */}
+            <TableRow></TableRow>
+          </TableFooter> */}
         </Table>
       )}
+      <div className="mt-5 min-w-max flex justify-center">
+        <PaginationComponent maxPage={maxPage} />
+      </div>
     </div>
   );
 }

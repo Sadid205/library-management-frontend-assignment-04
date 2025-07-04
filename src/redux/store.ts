@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "./features/counter/counterSlice";
+import paginationReducer from "./features/counter/paginationSlice";
 import { bookApi } from "./services/book";
 import { borrowApi } from "./services/borrow";
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    pagination: paginationReducer,
     [bookApi.reducerPath]: bookApi.reducer,
     [borrowApi.reducerPath]: borrowApi.reducer,
   },

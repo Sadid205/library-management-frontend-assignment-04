@@ -3,7 +3,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -15,7 +14,7 @@ import type { IBook, IBookWithoutId } from "@/interfaces/Ibook";
 import { Edit3, EyeIcon } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 import { BookSelection } from "../select/BookSelection";
-import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import {
   useCreateBookMutation,
   useUpdateBookMutation,

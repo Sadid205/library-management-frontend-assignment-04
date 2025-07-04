@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { useDeleteBookMutation } from "@/redux/services/book";
 import { Delete } from "lucide-react";
 import toast from "react-hot-toast";
+import { ButtonLoader } from "../loader/ButtonLoader";
 
 interface Props {
   id: string;
@@ -27,7 +28,7 @@ interface Ires {
 }
 
 export function DeleteAlertDialog({ id }: Props) {
-  const [deleteHandler] = useDeleteBookMutation();
+  const [deleteHandler, { isLoading }] = useDeleteBookMutation();
   const deleteBook = async () => {
     const res: Ires = await deleteHandler({ id: id });
     if (res.data?.success) {
@@ -51,7 +52,12 @@ export function DeleteAlertDialog({ id }: Props) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={deleteBook}>Continue</AlertDialogAction>
+          <AlertDialogAction
+            className="cursor-pointer w-30"
+            onClick={deleteBook}
+          >
+            {isLoading ? <ButtonLoader /> : "Continue"}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

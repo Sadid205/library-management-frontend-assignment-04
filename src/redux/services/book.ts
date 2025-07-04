@@ -1,4 +1,4 @@
-import type { IBook, IBookWithoutId } from "@/interfaces/Ibook";
+import type { IBookWithoutId } from "@/interfaces/Ibook";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const bookApi = createApi({
@@ -9,7 +9,12 @@ export const bookApi = createApi({
   tagTypes: ["book"],
   endpoints: (builder) => ({
     getAllBooks: builder.query({
-      query: () => "books",
+      query: ({ limit, page }) => {
+        const params = new URLSearchParams();
+        if (limit) params.append("limit", limit);
+        if (page) params.append("page", page);
+        return `books?${params.toString()}`;
+      },
       providesTags: ["book"],
     }),
     updateBook: builder.mutation({

@@ -1,9 +1,7 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -13,7 +11,7 @@ import { useGetAllBorrowQuery } from "@/redux/services/borrow";
 import Loader from "../loader/Loader";
 
 export function BorrowSummary() {
-  const { data: borrows, isLoading, isError } = useGetAllBorrowQuery(undefined);
+  const { data: borrows, isLoading } = useGetAllBorrowQuery(undefined);
   console.log(borrows);
   return (
     <div>
