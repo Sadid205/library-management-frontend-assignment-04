@@ -194,7 +194,7 @@ export function BookMutationDialog({ book, mode }: Props) {
               <Label htmlFor="isbn">ISBN</Label>
               <Input
                 {...register("isbn")}
-                type="number"
+                type="string"
                 id="isbn"
                 name="isbn"
                 disabled={mode === "view"}

@@ -1,69 +1,92 @@
-# React + TypeScript + Vite
+# Library Management System (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple **Library Management** project built with **React** and **Vite** focusing on essential book management and borrowing features. This is a **public** application where users can browse and borrow books without authentication.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+### 1. Public Routes
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- All pages are accessible **without login or authentication**.
+- Focus on core functionalities: viewing books, borrowing, and managing inventory.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 2. Book Management
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- **Book List Table:**
+  - Displays all books in a tabular format.
+  - Columns include: **Title, Author, Genre, ISBN, Copies, Availability, Actions**.
+- **Action Buttons / Icons:**
+  - **Edit Book:**  
+    Opens a form pre-filled with existing book data.  
+    On submission, updates the book via API and instantly refreshes UI.
+  - **Delete Book:**  
+    Opens a confirmation dialog before permanently deleting a book.
+  - **Borrow Book:**  
+    Opens a simple form to borrow a specific quantity of the book.
+- **Business Logic:**
+  - If `copies` count reaches **0**, the book is automatically marked as **unavailable**.
+- **Add New Book:**
+  - A dedicated button opens a form to add a new book.
+  - Fields:  
+    `Title`, `Author`, `Genre`, `ISBN`, `Description`, `Copies`, `Available` (optional, defaults to true).
+  - After creation, redirects to the book list and updates the UI immediately.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 3. Borrow Book
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- Accessible via the **Borrow** button in the book list.
+- Fields in borrow form:
+  - `Quantity` (number)
+  - `Due Date` (date)
+- Business logic:
+  - Quantity cannot exceed the number of available copies.
+  - When copies reach zero, the book is marked unavailable.
+- On successful submission:
+  - Shows a success message.
+  - Redirects to the **Borrow Summary** page.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 4. Borrow Summary
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Displays a summary of all borrowed books.
+- Columns include:  
+  `Book Title`, `ISBN`, `Total Quantity Borrowed`.
+- Data is retrieved via aggregation API.
+
+---
+
+## 🏠 Landing Page Components
+
+- **Navbar:**  
+  Simple navigation with links to:
+
+  - All Books
+  - Add Book
+  - Borrow Summary
+
+- **Book List Table/Grid:**  
+  Displays all books with core actions like Edit, Delete, Borrow.
+
+## 🔧 Tech Stack
+
+- **Frontend:** React.js with Vite
+- **State Management:** Redux
+- **API:** REST API (Express Js)
+- **Styling:** Tailwind CSS
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js >= 14.x
+- npm or yarn
+
+### Installation
+
+```bash
+git clone https://github.com/Sadid205/library-management-frontend-assignment-04.git
+cd library-management-frontend
+npm install
+npm run dev
 ```
