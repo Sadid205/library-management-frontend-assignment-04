@@ -197,6 +197,11 @@ export function BookMutationDialog({ book, mode }: Props) {
                 disabled={mode === "view"}
                 required
               />
+              {errors.description && (
+                <p className="text-red-500 text-sm">
+                  {errors.description.message}
+                </p>
+              )}
             </div>
             <div className="grid gap-3">
               <Label htmlFor="isbn">ISBN</Label>
