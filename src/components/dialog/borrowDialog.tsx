@@ -40,9 +40,19 @@ export function BorrowDialog({ id, refetch, isAvailable }: Props) {
       book: id,
     },
   });
+  const selectedDate = watch("dueDate");
+  console.log(selectedDate);
   const [borrowBook, { isLoading }] = useBorrowBookMutation();
   const onSubmit: SubmitHandler<IBorrowWithoutId> = async (formData) => {
     try {
+      if (!selectedDate) {
+        setError("dueDate", {
+          type: "required",
+          message: "Due date is required",
+        });
+        alert("Due date is required");
+        return;
+      }
       console.log("formData", formData);
       const res = await borrowBook({ borrowData: formData }).unwrap();
       console.log(res);
@@ -75,8 +85,7 @@ export function BorrowDialog({ id, refetch, isAvailable }: Props) {
       }
     }
   };
-  const selectedDate = watch("dueDate");
-  console.log(selectedDate);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -105,6 +114,8 @@ export function BorrowDialog({ id, refetch, isAvailable }: Props) {
                 id="quantity"
                 type="number"
                 name="quantity"
+                required
+                min={1}
               />
               {errors.quantity && (
                 <p className="text-red-500 text-sm">

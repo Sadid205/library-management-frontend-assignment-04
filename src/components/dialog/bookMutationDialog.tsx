@@ -73,12 +73,20 @@ export function BookMutationDialog({ book, mode }: Props) {
         ? { ...book }
         : defaultvalues,
   });
+  // console.log(errors);
+  const selectedGenre = watch("genre");
+  const selectAvailable = watch("available");
   const [updateBook, { isLoading: updateLoading }] = useUpdateBookMutation();
   const [createBook, { isLoading: createLoading }] = useCreateBookMutation();
-  // console.log(errors);
+  console.log(errors);
   const onSubmit: SubmitHandler<IBookWithoutId> = async (formData) => {
     // console.log("clik");
     // console.log("formData", formData);
+    if (selectedGenre === "") {
+      setError("genre", { type: "required", message: "Genre is required" });
+      alert("Genre is required");
+      return;
+    }
     try {
       if (mode === "update" && book) {
         const res = await updateBook({
@@ -124,9 +132,6 @@ export function BookMutationDialog({ book, mode }: Props) {
       }
     }
   };
-  console.log(errors);
-  const selectedGenre = watch("genre");
-  const selectAvailable = watch("available");
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -164,6 +169,7 @@ export function BookMutationDialog({ book, mode }: Props) {
                 disabled={mode === "view"}
                 id="title"
                 name="title"
+                required
               />
               {errors.title && (
                 <p className="text-red-500 text-sm">{errors.title.message}</p>
@@ -176,6 +182,7 @@ export function BookMutationDialog({ book, mode }: Props) {
                 {...register("author")}
                 id="author"
                 name="author"
+                required
               />
               {errors.author && (
                 <p className="text-red-500 text-sm">{errors.author.message}</p>
@@ -188,6 +195,7 @@ export function BookMutationDialog({ book, mode }: Props) {
                 id="description"
                 name="description"
                 disabled={mode === "view"}
+                required
               />
             </div>
             <div className="grid gap-3">
@@ -198,6 +206,7 @@ export function BookMutationDialog({ book, mode }: Props) {
                 id="isbn"
                 name="isbn"
                 disabled={mode === "view"}
+                required
               />
               {errors.isbn && (
                 <p className="text-red-500 text-sm">{errors.isbn.message}</p>
@@ -211,6 +220,7 @@ export function BookMutationDialog({ book, mode }: Props) {
                 type="number"
                 id="copies"
                 name="copies"
+                required
               />
               {errors.copies && (
                 <p className="text-red-500 text-sm">{errors.copies.message}</p>
