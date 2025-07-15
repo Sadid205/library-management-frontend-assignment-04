@@ -126,12 +126,13 @@ export function BorrowDialog({ id, refetch, isAvailable }: Props) {
             <div className="grid gap-3">
               <DateSelection
                 // date={selectedDate}
-                onChange={(val: Date | undefined) =>
+                onChange={(val: Date | undefined) => {
+                  console.log("Selected date:", val);
                   setValue("dueDate", val, {
                     shouldValidate: true,
                     shouldDirty: true,
-                  })
-                }
+                  });
+                }}
               />
               {errors.dueDate && (
                 <p className="text-red-500 text-sm">{errors.dueDate.message}</p>
